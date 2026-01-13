@@ -13,6 +13,7 @@ const baseConfig = {
     context: path.resolve(__dirname, 'src'),
     entry: {
         app: './index.tsx',
+        custom: path.resolve(__dirname, 'jane-extra.js'),
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -38,6 +39,7 @@ const baseConfig = {
         new ESLintPlugin({
             context: path.resolve(__dirname, '.'),
             extensions: ['js', 'jsx', 'ts', 'tsx'],
+            exclude: ['node_modules', path.resolve(__dirname, 'jane-extra.js')],
         }),
         new CopyWebpackPlugin({
             patterns: [{ from: './favicon.png', to: '.' }],
