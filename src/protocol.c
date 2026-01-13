@@ -23,7 +23,7 @@ static int send_initial_message(struct lws *wsi, int index) {
   switch (cmd) {
     case SET_WINDOW_TITLE:
       gethostname(buffer, sizeof(buffer) - 1);
-      n = sprintf((char *)p, "%c%s (%s)", cmd, server->command, buffer);
+      n = sprintf((char *)p, "%cttyd on %s", cmd, buffer);
       break;
     case SET_PREFERENCES:
       n = sprintf((char *)p, "%c%s", cmd, server->prefs_json);
