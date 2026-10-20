@@ -20,9 +20,12 @@ waitForTerm(() => {
   console.log('xterm.js loaded, injecting custom keybinds', customKeys);
   term.attachCustomKeyEventHandler(ev => {
     for (const customKey of customKeys) {
-      const ctrlMatches = customKey.ctrl === ev.ctrlKey;
-      const shiftMatches = customKey.shift === ev.shiftKey;
-      const altMatches = customKey.alt === ev.altKey;
+      // A modifier the binding doesn't mention may or may not be held.  This matches the
+      // html.h that was actually built and deployed; strict equality here would make the
+      // bindings without [shift] (i.e. all of them) unmatchable.
+      const ctrlMatches = !customKey.ctrl || ev.ctrlKey;
+      const shiftMatches = !customKey.shift || ev.shiftKey;
+      const altMatches = !customKey.alt || ev.altKey;
       if (ctrlMatches && shiftMatches && altMatches && ev.key === customKey.key && ev.type === 'keydown') {
         term.input(customKey.sequence);
         return false; // Prevent xterm.js from processing it further
