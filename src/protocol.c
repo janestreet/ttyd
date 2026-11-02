@@ -131,7 +131,7 @@ static char **build_env(struct pss_tty *pss) {
 
   // TERM
   envp[i] = xmalloc(36);
-  snprintf(envp[i], 36, "TERM=%s", server->terminal_type);
+  snprintf(envp[i], 36, "TERM=%s", pss->terminal_type);
   i++;
 
   // TTYD_USER
@@ -231,6 +231,7 @@ int callback_tty(struct lws *wsi, enum lws_callback_reasons reason, void *user, 
     case LWS_CALLBACK_ESTABLISHED:
       pss->initialized = false;
       pss->authenticated = false;
+      pss->terminal_type = server->terminal_type;
       pss->wsi = wsi;
       pss->lws_close_status = LWS_CLOSE_STATUS_NOSTATUS;
 
@@ -344,6 +345,15 @@ int callback_tty(struct lws *wsi, enum lws_callback_reasons reason, void *user, 
               lws_close_reason(wsi, LWS_CLOSE_STATUS_POLICY_VIOLATION, NULL, 0);
               return -1;
             }
+          }
+          struct json_object *terminal_type = NULL;
+          if (json_object_object_get_ex(obj, "terminalType", &terminal_type) &&
+              json_object_is_type(terminal_type, json_type_string) &&
+              json_object_get_string_len(terminal_type) == sizeof("xterm-ghostty") - 1 &&
+              !strcmp(json_object_get_string(terminal_type), "xterm-ghostty")) {
+            pss->terminal_type = "xterm-ghostty";
+          } else {
+            pss->terminal_type = server->terminal_type;
           }
           json_object_put(obj);
           if (!spawn_process(pss, columns, rows)) return 1;
