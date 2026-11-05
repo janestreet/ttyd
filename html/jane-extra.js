@@ -76,11 +76,31 @@ const handleOpenUrlOsc = (data) => {
   return true;
 };
 
+// Whether a program has enabled the kitty keyboard protocol.  xterm.js has no public API
+// for this, so this reaches into its internals; if they change, we behave as if the
+// protocol were off.
+const kittyKeyboardActive = () => (term._core?.coreService?.kittyKeyboard?.flags ?? 0) !== 0;
+
+// When the kitty keyboard protocol is on, xterm.js sends these to the program instead of
+// letting the browser copy and paste.  Returning false from the custom key event handler
+// makes xterm.js leave the event alone.
+const isClipboardShortcut = ev => {
+  const key = ev.key.toLowerCase();
+  if (key !== 'c' && key !== 'v') return false;
+  return navigator.platform.startsWith('Mac')
+    ? ev.metaKey && !ev.ctrlKey && !ev.altKey && !ev.shiftKey
+    : ev.ctrlKey && ev.shiftKey && !ev.altKey && !ev.metaKey;
+};
+
 waitForTerm(() => {
   term.parser.registerOscHandler(openUrlOscNumber, handleOpenUrlOsc);
 
   console.log('xterm.js loaded, injecting custom keybinds', customKeys);
   term.attachCustomKeyEventHandler(ev => {
+    if (kittyKeyboardActive()) {
+      // The protocol encodes these keys itself, so skip our custom bindings.
+      return !isClipboardShortcut(ev);
+    }
     for (const customKey of customKeys) {
       // A modifier the binding doesn't mention may or may not be held.  This matches the
       // html.h that was actually built and deployed; strict equality here would make the

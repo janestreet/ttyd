@@ -1258,75 +1258,64 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xterm/addon-canvas@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "@xterm/addon-canvas@npm:0.7.0"
+"@xterm/addon-clipboard@npm:0.3.0-beta.334":
+  version: 0.3.0-beta.334
+  resolution: "@xterm/addon-clipboard@npm:0.3.0-beta.334::__archiveUrl=https%3A%2F%2Fjfrog%3A8443%2Fartifactory%2Fapi%2Fnpm%2Fnpm-remote%2F%40xterm%2Faddon-clipboard%2F-%2Faddon-clipboard-0.3.0-beta.334.tgz"
   peerDependencies:
-    "@xterm/xterm": ^5.0.0
-  checksum: 28b9965f34e01a9bbcc31651dee2d4a9380aad528039484cce372b856be820705b293c4b5091cee65208c3dfbf6f944f27ecc6c3b794df5a96036cbf6dba0d74
+    "@xterm/xterm": ^6.1.0-beta.336
+  checksum: c8559c8f14696dbbd0b023b63371a1a7f422d685fbbf02a25d40d2a123d5401839490f6f8bef1e1b735e83a86692397c0d15179902f9d48f900667a13b048c6a
   languageName: node
   linkType: hard
 
-"@xterm/addon-clipboard@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@xterm/addon-clipboard@npm:0.1.0"
-  dependencies:
-    js-base64: ^3.7.5
+"@xterm/addon-fit@npm:0.12.0-beta.332":
+  version: 0.12.0-beta.332
+  resolution: "@xterm/addon-fit@npm:0.12.0-beta.332::__archiveUrl=https%3A%2F%2Fjfrog%3A8443%2Fartifactory%2Fapi%2Fnpm%2Fnpm-remote%2F%40xterm%2Faddon-fit%2F-%2Faddon-fit-0.12.0-beta.332.tgz"
   peerDependencies:
-    "@xterm/xterm": ^5.4.0
-  checksum: fe33d28223ae7f9965653c6c946a68e06f1d884fba1d11e8bcb52dcc608dbb2240caf48573d6297daefa56696e88f963148a1035ccf034cb6fb4f88f506a2ec7
+    "@xterm/xterm": ^6.1.0-beta.336
+  checksum: 5b13229a77a1aadb27475dd7f8e84e9bd43ca7fd141362bd8c1369ce6c999ef9018b96013003ae3e2461b87e7ce87a8bf330e0ac572ca729f86a942552404ce2
   languageName: node
   linkType: hard
 
-"@xterm/addon-fit@npm:^0.10.0":
-  version: 0.10.0
-  resolution: "@xterm/addon-fit@npm:0.10.0"
+"@xterm/addon-image@npm:0.10.0-beta.331":
+  version: 0.10.0-beta.331
+  resolution: "@xterm/addon-image@npm:0.10.0-beta.331::__archiveUrl=https%3A%2F%2Fjfrog%3A8443%2Fartifactory%2Fapi%2Fnpm%2Fnpm-remote%2F%40xterm%2Faddon-image%2F-%2Faddon-image-0.10.0-beta.331.tgz"
   peerDependencies:
-    "@xterm/xterm": ^5.0.0
-  checksum: 8edfad561c0d0316c5883cbe2ce56109f105a2b2bf53b71d5f8c788e656a3205c1093a659dddcf4025a459e4b7ff8e07b6c6a19815c8711deeded560de5f1893
+    "@xterm/xterm": ^6.1.0-beta.336
+  checksum: 880012d002fafa9609e09dba4650eb732c3f4cd0aa80108de2eb3514a2917edd74035c41363f0c822c7a3b6bb9209da71b96754434eb870d6fcd7d53dff15700
   languageName: node
   linkType: hard
 
-"@xterm/addon-image@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "@xterm/addon-image@npm:0.8.0"
+"@xterm/addon-unicode11@npm:0.10.0-beta.330":
+  version: 0.10.0-beta.330
+  resolution: "@xterm/addon-unicode11@npm:0.10.0-beta.330::__archiveUrl=https%3A%2F%2Fjfrog%3A8443%2Fartifactory%2Fapi%2Fnpm%2Fnpm-remote%2F%40xterm%2Faddon-unicode11%2F-%2Faddon-unicode11-0.10.0-beta.330.tgz"
   peerDependencies:
-    "@xterm/xterm": ^5.2.0
-  checksum: 852ea4482e0272bf74a505a9b54429a7d60775f0ee0b86bf207b5ea52a8f2e83ce2870415129fca82710a63a7ca3e233564d5dd050ebc49512d1d0113e5b5b1b
+    "@xterm/xterm": ^6.1.0-beta.336
+  checksum: 6a3453122e74d6881a37eed7a959039b2843edee31fd834d4e8ccbdc528e7d33bf77799e01990898a5b6ca9185fd4517998bf8dfdf07aef8c16c8b0c595bf61d
   languageName: node
   linkType: hard
 
-"@xterm/addon-unicode11@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "@xterm/addon-unicode11@npm:0.8.0"
+"@xterm/addon-web-links@npm:0.13.0-beta.330":
+  version: 0.13.0-beta.330
+  resolution: "@xterm/addon-web-links@npm:0.13.0-beta.330::__archiveUrl=https%3A%2F%2Fjfrog%3A8443%2Fartifactory%2Fapi%2Fnpm%2Fnpm-remote%2F%40xterm%2Faddon-web-links%2F-%2Faddon-web-links-0.13.0-beta.330.tgz"
   peerDependencies:
-    "@xterm/xterm": ^5.0.0
-  checksum: 187df1098b170af9c519fceb0681655e54e571d54538e5271b54b801dd30f8710b1c4a5ff9629f3d2a0ae9a59b4da563be99a4d2a0a163a1728cf245773c741c
+    "@xterm/xterm": ^6.1.0-beta.336
+  checksum: 8af8081c458c0c572cbb10460a5e4f193caaf4249f88608e96a12ef632c16057d9e2413b751667594d982acfb61e6eab9016252ff97ff977d79faaf0a4c5d3fe
   languageName: node
   linkType: hard
 
-"@xterm/addon-web-links@npm:^0.11.0":
-  version: 0.11.0
-  resolution: "@xterm/addon-web-links@npm:0.11.0"
+"@xterm/addon-webgl@npm:0.20.0-beta.329":
+  version: 0.20.0-beta.329
+  resolution: "@xterm/addon-webgl@npm:0.20.0-beta.329::__archiveUrl=https%3A%2F%2Fjfrog%3A8443%2Fartifactory%2Fapi%2Fnpm%2Fnpm-remote%2F%40xterm%2Faddon-webgl%2F-%2Faddon-webgl-0.20.0-beta.329.tgz"
   peerDependencies:
-    "@xterm/xterm": ^5.0.0
-  checksum: c1b36b649b8cddc613213eb9e835daf3106a8be359a19ccacca1f1d9ff883b59d478f166109ee017fa3994d224dcdd82976ad5d5a1221271ab8d3d5684eb141d
+    "@xterm/xterm": ^6.1.0-beta.336
+  checksum: c10e00ea7dfcebf2983589194ab1b53007eb4739b1daae3379f443aae8ca410fbef4c133474029b8a6470fd7e122e5940ad000c9b8b882fcaace72ce4f05cec1
   languageName: node
   linkType: hard
 
-"@xterm/addon-webgl@npm:^0.18.0":
-  version: 0.18.0
-  resolution: "@xterm/addon-webgl@npm:0.18.0"
-  peerDependencies:
-    "@xterm/xterm": ^5.0.0
-  checksum: 942ecaa4e08423563a795a1a63fa79637e60d4e3aba1b5fa2f426e1d7b19c553e8c8f1cfad1258461f22e05362e791f642dc6aab7e8766e26d4d3876617d8320
-  languageName: node
-  linkType: hard
-
-"@xterm/xterm@npm:^5.5.0":
-  version: 5.5.0
-  resolution: "@xterm/xterm@npm:5.5.0"
-  checksum: 393c1891b95fdd50d05e7a063abdc95a6643d2c45a4231637c23db90511426a95b1b56a5c4c91831121d2710aee9de97cf5e426016c589ca87dea8fff9a41b33
+"@xterm/xterm@npm:6.1.0-beta.336":
+  version: 6.1.0-beta.336
+  resolution: "@xterm/xterm@npm:6.1.0-beta.336::__archiveUrl=https%3A%2F%2Fjfrog%3A8443%2Fartifactory%2Fapi%2Fnpm%2Fnpm-remote%2F%40xterm%2Fxterm%2F-%2Fxterm-6.1.0-beta.336.tgz"
+  checksum: d5f9ec3662564d7c3b720dc3170da243bfe72fc365e33de89bae8057d98c33995ef73145d64f607d927adc3c5d5b421a75ac618575476c72e406370e8a378215
   languageName: node
   linkType: hard
 
@@ -6442,13 +6431,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-base64@npm:^3.7.5":
-  version: 3.7.7
-  resolution: "js-base64@npm:3.7.7"
-  checksum: d1b02971db9dc0fd35baecfaf6ba499731fb44fe3373e7e1d6681fbd3ba665f29e8d9d17910254ef8104e2cb8b44117fe4202d3dc54c7cafe9ba300fe5433358
-  languageName: node
-  linkType: hard
-
 "js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -10492,14 +10474,13 @@ __metadata:
   resolution: "ttyd@workspace:."
   dependencies:
     "@typescript-eslint/eslint-plugin": ^7.1.1
-    "@xterm/addon-canvas": ^0.7.0
-    "@xterm/addon-clipboard": ^0.1.0
-    "@xterm/addon-fit": ^0.10.0
-    "@xterm/addon-image": ^0.8.0
-    "@xterm/addon-unicode11": ^0.8.0
-    "@xterm/addon-web-links": ^0.11.0
-    "@xterm/addon-webgl": ^0.18.0
-    "@xterm/xterm": ^5.5.0
+    "@xterm/addon-clipboard": 0.3.0-beta.334
+    "@xterm/addon-fit": 0.12.0-beta.332
+    "@xterm/addon-image": 0.10.0-beta.331
+    "@xterm/addon-unicode11": 0.10.0-beta.330
+    "@xterm/addon-web-links": 0.13.0-beta.330
+    "@xterm/addon-webgl": 0.20.0-beta.329
+    "@xterm/xterm": 6.1.0-beta.336
     copy-webpack-plugin: ^12.0.2
     css-loader: ^6.10.0
     css-minimizer-webpack-plugin: ^6.0.0
