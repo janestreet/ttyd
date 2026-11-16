@@ -82,15 +82,37 @@ const handleOpenUrlOsc = (data) => {
 const kittyKeyboardActive = () => (term._core?.coreService?.kittyKeyboard?.flags ?? 0) !== 0;
 
 // When the kitty keyboard protocol is on, xterm.js sends these to the program instead of
-// letting the browser copy and paste.  Returning false from the custom key event handler
+// letting the browser handle them.  Returning false from the custom key event handler
 // makes xterm.js leave the event alone.
-const isClipboardShortcut = ev => {
+//
+// We try to leave to the browser exactly the Super (Cmd on macOS) combinations that
+// xterm.js leaves to it when the protocol is off:
+//
+// - Left to the browser: Super with a character key (a letter, digit, punctuation or
+//   space), Super with an arrow key, and Super on its own.  This covers Cmd+C/V on
+//   macOS, and Super+<foo> desktop and browser shortcuts on Linux.
+//
+// - Sent to the program, with Super encoded: Super with Backspace, Tab, Enter, Escape,
+//   Insert, Delete, Home, End, Page Up, Page Down or a function key.  Without the
+//   protocol, xterm.js sends these too.
+//
+// One difference: without the protocol, Ctrl+Shift+Super with -, 2 or 6 sends ^_, ^@ or
+// ^^, but here it's left to the browser.
+//
+// Separately, outside macOS, Ctrl+Shift+C/V are left to the browser to copy and paste.
+const isBrowserShortcut = ev => {
+  if (ev.metaKey && (ev.key.length === 1 || ev.key.startsWith('Arrow') || ev.key === 'Meta')) {
+    return true;
+  }
   const key = ev.key.toLowerCase();
-  if (key !== 'c' && key !== 'v') return false;
-  return navigator.platform.startsWith('Mac')
-    ? ev.metaKey && !ev.ctrlKey && !ev.altKey && !ev.shiftKey
-    : ev.ctrlKey && ev.shiftKey && !ev.altKey && !ev.metaKey;
+  return (key === 'c' || key === 'v') && ev.ctrlKey && ev.shiftKey && !ev.altKey;
 };
+
+// The [code]s of keys whose keydown we left to the browser.  We leave their keyup to it
+// too, even if the modifiers have changed in between, so that a program asking for key
+// release events doesn't get a release without a press.  For example, Chrome reports
+// [metaKey] as false when Super itself is released.
+const keysLeftToBrowser = new Set();
 
 waitForTerm(() => {
   term.parser.registerOscHandler(openUrlOscNumber, handleOpenUrlOsc);
@@ -99,7 +121,10 @@ waitForTerm(() => {
   term.attachCustomKeyEventHandler(ev => {
     if (kittyKeyboardActive()) {
       // The protocol encodes these keys itself, so skip our custom bindings.
-      return !isClipboardShortcut(ev);
+      if (ev.type === 'keyup' && keysLeftToBrowser.delete(ev.code)) return false;
+      if (!isBrowserShortcut(ev)) return true;
+      if (ev.type === 'keydown') keysLeftToBrowser.add(ev.code);
+      return false;
     }
     for (const customKey of customKeys) {
       // A modifier the binding doesn't mention may or may not be held.  This matches the
