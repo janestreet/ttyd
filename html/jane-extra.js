@@ -108,11 +108,14 @@ const isBrowserShortcut = ev => {
   return (key === 'c' || key === 'v') && ev.ctrlKey && ev.shiftKey && !ev.altKey;
 };
 
-// The [code]s of keys whose keydown we left to the browser.  We leave their keyup to it
-// too, even if the modifiers have changed in between, so that a program asking for key
-// release events doesn't get a release without a press.  For example, Chrome reports
-// [metaKey] as false when Super itself is released.
-const keysLeftToBrowser = new Set();
+// The [code]s of keys whose latest keydown went to the program.  A keyup goes to the
+// program exactly when its key is here, so that a program asking for key release events
+// gets a release for each press it got, and no others, whatever modifiers are held by
+// the time of the release.  (For example, Chrome reports [metaKey] as false when Super
+// itself is released.)  Every keydown records where it went, so an entry left behind
+// when the browser fires no keyup, as on macOS for keys released while Cmd is held,
+// can't misdirect a later release.
+const keysSentToProgram = new Set();
 
 waitForTerm(() => {
   term.parser.registerOscHandler(openUrlOscNumber, handleOpenUrlOsc);
@@ -121,10 +124,13 @@ waitForTerm(() => {
   term.attachCustomKeyEventHandler(ev => {
     if (kittyKeyboardActive()) {
       // The protocol encodes these keys itself, so skip our custom bindings.
-      if (ev.type === 'keyup' && keysLeftToBrowser.delete(ev.code)) return false;
-      if (!isBrowserShortcut(ev)) return true;
-      if (ev.type === 'keydown') keysLeftToBrowser.add(ev.code);
-      return false;
+      if (ev.type === 'keyup') return keysSentToProgram.delete(ev.code);
+      const toProgram = !isBrowserShortcut(ev);
+      if (ev.type === 'keydown') {
+        if (toProgram) keysSentToProgram.add(ev.code);
+        else keysSentToProgram.delete(ev.code);
+      }
+      return toProgram;
     }
     for (const customKey of customKeys) {
       // A modifier the binding doesn't mention may or may not be held.  This matches the
