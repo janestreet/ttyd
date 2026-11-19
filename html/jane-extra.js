@@ -108,6 +108,37 @@ const isBrowserShortcut = ev => {
   return (key === 'c' || key === 'v') && ev.ctrlKey && ev.shiftKey && !ev.altKey;
 };
 
+const isMac = /^Mac/.test(navigator.platform);
+
+// What each key types on the US layout, without and with Shift.  xterm.js's legacy
+// encoder uses the same table to send Option+<key> when Option is Meta.
+const usLayoutKeys = {
+  Backquote: ['`', '~'], Digit1: ['1', '!'], Digit2: ['2', '@'], Digit3: ['3', '#'],
+  Digit4: ['4', '$'], Digit5: ['5', '%'], Digit6: ['6', '^'], Digit7: ['7', '&'],
+  Digit8: ['8', '*'], Digit9: ['9', '('], Digit0: ['0', ')'], Minus: ['-', '_'],
+  Equal: ['=', '+'], BracketLeft: ['[', '{'], BracketRight: [']', '}'],
+  Backslash: ['\\', '|'], Semicolon: [';', ':'], Quote: ['\'', '"'], Comma: [',', '<'],
+  Period: ['.', '>'], Slash: ['/', '?'], Space: [' ', ' '],
+};
+
+const usLayoutKey = ev => {
+  const letter = /^Key([A-Z])$/.exec(ev.code)?.[1];
+  if (letter) return ev.shiftKey ? letter : letter.toLowerCase();
+  return usLayoutKeys[ev.code]?.[ev.shiftKey ? 1 : 0];
+};
+
+// On macOS, Option+<key> reports the character Option composes as [ev.key], even when
+// Option is Meta: Option+x is "≈" on the US layout, and Option+` is "Dead".  xterm.js's
+// kitty encoder sends that character as the shifted key and as the text, and for keys
+// other than letters and digits as the key too, so Emacs sees M-≈ instead of M-x, and
+// M-¯ instead of M-<.  Make [ev.key] what the key types without Option, so the encoder
+// sends what it would for Shift and the key alone, plus Alt.
+const undoOptionComposition = ev => {
+  if (!isMac || !ev.altKey || !term.options.macOptionIsMeta) return;
+  const key = usLayoutKey(ev);
+  if (key !== undefined && key !== ev.key) Object.defineProperty(ev, 'key', { value: key });
+};
+
 // The [code]s of keys whose latest keydown went to the program.  A keyup goes to the
 // program exactly when its key is here, so that a program asking for key release events
 // gets a release for each press it got, and no others, whatever modifiers are held by
@@ -123,6 +154,7 @@ waitForTerm(() => {
   console.log('xterm.js loaded, injecting custom keybinds', customKeys);
   term.attachCustomKeyEventHandler(ev => {
     if (kittyKeyboardActive()) {
+      undoOptionComposition(ev);
       // The protocol encodes these keys itself, so skip our custom bindings.
       if (ev.type === 'keyup') return keysSentToProgram.delete(ev.code);
       const toProgram = !isBrowserShortcut(ev);
