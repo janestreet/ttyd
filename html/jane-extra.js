@@ -133,6 +133,12 @@ const usLayoutKey = ev => {
 // other than letters and digits as the key too, so Emacs sees M-≈ instead of M-x, and
 // M-¯ instead of M-<.  Make [ev.key] what the key types without Option, so the encoder
 // sends what it would for Shift and the key alone, plus Alt.
+
+// CR-someday swhitton: Remove this once xterm.js fixes it upstream.  The key field is
+// https://github.com/xtermjs/xterm.js/issues/5819, where a US-layout fix like this one was
+// rejected (https://github.com/xtermjs/xterm.js/pull/6083) in favour of keyboard layout
+// providers (https://github.com/xtermjs/xterm.js/issues/5882).  The shifted key and text
+// fields aren't reported upstream.
 const undoOptionComposition = ev => {
   if (!isMac || !ev.altKey || !term.options.macOptionIsMeta) return;
   const key = usLayoutKey(ev);
